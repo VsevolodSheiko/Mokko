@@ -1,21 +1,10 @@
-# pylint: disable=missing-module-docstring
-# pylint: disable=missing-class-docstring
-# pylint: disable=missing-function-docstring
-from django.db import models
+from rest_framework import serializers
 
+from coffeehouse.models import *
 
-# Create your models here.
-class CoffeeShop(models.Model):
-    id = models.IntegerField(primary_key=True)
-    description = models.TextField()
-    city = models.CharField(max_length=50)
-    address = models.CharField(max_length=255)
-    phone = models.CharField(max_length=25)
-
+class CoffeeShopSerializer(models.Model):
     class Meta:
-        db_table = "coffeeshop"
-        verbose_name = "coffeeshop"
-        verbose_name_plural = "coffeeshops"
+        model = CoffeeShop
 
 
 class Visitor(models.Model):
@@ -129,4 +118,3 @@ class Review(models.Model):
         db_table = "review"
         verbose_name = 'review'
         verbose_name_plural = 'reviews'
-        
