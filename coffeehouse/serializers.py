@@ -2,119 +2,61 @@ from rest_framework import serializers
 
 from coffeehouse.models import *
 
-class CoffeeShopSerializer(models.Model):
+class CoffeeShopSerializer(serializers.ModelSerializer):
     class Meta:
         model = CoffeeShop
+        fields = ['address', 'city', 'phone', 'description']
 
 
-class Visitor(models.Model):
-    id = models.IntegerField(primary_key=True)
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=100)
-    email = models.EmailField(max_length=50)
-    password = models.CharField(max_length=100)
-    date_joined = models.DateField()
-
+class VisitorSerializer(serializers.ModelSerializer):
     class Meta:
-        db_table = "visitor"
-        verbose_name = "visitor"
-        verbose_name_plural = "visitors"
+        model = Visitor
+        fields = ['first_name', 'last_name', 'email', 'date_joined']
 
 
-class Category(models.Model):
-    id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=100)
-    description = models.TextField()
-
+class CategorySerializer(serializers.ModelSerializer):
     class Meta:
-        db_table = "category"
-        verbose_name = "category"
-        verbose_name_plural = "categories"
+        model = Category
+        fields = ['name', 'description']
 
 
-class Product(models.Model):
-    id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=150, null=False)
-    price = models.FloatField(default=0.00, null=False)
-    category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
-    description = models.TextField()
-
+class ProductSerializer(serializers.ModelSerializer):
     class Meta:
-        db_table = "product"
-        verbose_name = "product"
-        verbose_name_plural = "products"
+        model = Product
+        fields = ['name', 'price', 'description']
 
 
-class Ingredient(models.Model):
-    id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=100)
-    unit = models.CharField(max_length=50)
-    price_per_unit = models.FloatField(default=0.00)
-
+class IngredientSerializer(serializers.ModelSerializer):
     class Meta:
-        db_table = "ingredient"
-        verbose_name = "ingredient"
-        verbose_name_plural = "ingredients"
+        model = Ingredient
+        fields = ['name', 'unit', 'price_per_unit']
 
 
-class Order(models.Model):
-    id = models.IntegerField(primary_key=True)
-    date_time = models.DateTimeField()
-    coffee_shop = models.ForeignKey(CoffeeShop, on_delete=models.DO_NOTHING)
-    status = models.CharField(max_length=15)
-
+class OrderSerializer(serializers.ModelSerializer):
     class Meta:
-        db_table = "order"
-        verbose_name = "order"
-        verbose_name_plural = "orders"
+        model = Order
+        fields = ['name', 'unit', 'price_per_unit']
 
 
-class OrderItem(models.Model):
-    id = models.IntegerField(primary_key=True)
-    order = models.ForeignKey(Order, on_delete=models.DO_NOTHING)
-    item = models.ForeignKey(Product, on_delete=models.DO_NOTHING)
-    quantity = models.IntegerField()
-    unit_price = models.ManyToManyField(to=Product, related_name="products")
-
+class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
-        db_table = "orderitem"
-        verbose_name = "orderitem"
-        verbose_name_plural = "orderitems"
+        model = OrderItem
+        fields = ['id', 'order', 'item', 'quantity', 'unit_price']
 
 
-class FreeTable(models.Model):
-    id = models.IntegerField(primary_key=True)
-    seats = models.IntegerField()
-    is_available = models.BooleanField()
-
+class FreeTableSerializer(serializers.ModelSerializer):
     class Meta:
-        db_table = "freetable"
-        verbose_name = "freetable"
-        verbose_name_plural = "freetables"
+        model = FreeTable
+        fields = ['id', 'seats', 'is_available']
 
 
-class Promotion(models.Model):
-    id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=100)
-    description = models.TextField()
-    start_date = models.DateField()
-    end_date = models.DateField()
-    discount = models.IntegerField()
-    product_type = models.ForeignKey(Product, on_delete=models.DO_NOTHING)
-
+class PromotionSerializer(serializers.ModelSerializer):
     class Meta:
-        db_table = "promotion"
-        verbose_name = "promotion"
-        verbose_name_plural = "promotions"
+        model = Promotion
+        fields = ['id', 'name', 'description', 'start_date', 'end_date', 'discount', 'product_type']
 
-class Review(models.Model):
-    id = models.IntegerField(primary_key=True)
-    product = models.ForeignKey(Product, on_delete=models.DO_NOTHING)
-    visitor = models.ForeignKey(Visitor, on_delete=models.DO_NOTHING)
-    rating = models.IntegerField()
-    context = models.TextField()
 
+class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
-        db_table = "review"
-        verbose_name = 'review'
-        verbose_name_plural = 'reviews'
+        model = Review
+        fields = ['id', 'product', 'visitor', 'rating', 'context']

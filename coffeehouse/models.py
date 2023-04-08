@@ -7,11 +7,11 @@ from django.db import models
 # Create your models here.
 class CoffeeShop(models.Model):
     id = models.IntegerField(primary_key=True)
-    description = models.TextField()
-    city = models.CharField(max_length=50)
     address = models.CharField(max_length=255)
     phone = models.CharField(max_length=25)
-
+    city = models.CharField(max_length=50)
+    description = models.TextField()
+    
     class Meta:
         db_table = "coffeeshop"
         verbose_name = "coffeeshop"
@@ -117,6 +117,7 @@ class Promotion(models.Model):
         db_table = "promotion"
         verbose_name = "promotion"
         verbose_name_plural = "promotions"
+
 
 class Review(models.Model):
     id = models.IntegerField(primary_key=True)
