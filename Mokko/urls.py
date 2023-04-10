@@ -16,9 +16,24 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
+from rest_framework.documentation import include_docs_urls
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
 from coffeehouse.viewsets import *
 
 router = routers.DefaultRouter()
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Mokko API Swagger Documentation",
+        default_version='v1',
+        description="Mokko API Swagger Documentation was created by Vsevolod Sheiko - student of Hillel Python Pro course ",
+        license=openapi.License(name="BSD License"),
+    ),
+    public=True,
+    permission_classes=[],
+)
 
 router_model_dict = {
     'coffeeshop': CoffeeShopViewSet,
@@ -34,10 +49,11 @@ router_model_dict = {
 }
 
 for k, v in router_model_dict.items():
-    print(k, v)
     router.register(k, v)
 
 urlpatterns = [
-    path('api/', include(router.urls)),
     path('admin/', admin.site.urls),
+    path('api/', include(router.urls)),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]

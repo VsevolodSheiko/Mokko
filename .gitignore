@@ -1,3 +1,4 @@
 .env
-coffeehouse\__pycache__
-Mokko\__pycache__
+__pycache__
+/Mokko/__pycache__
+/coffeehouse/__pycache__

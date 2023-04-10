@@ -5,37 +5,37 @@ from coffeehouse.models import *
 class CoffeeShopSerializer(serializers.ModelSerializer):
     class Meta:
         model = CoffeeShop
-        fields = ['address', 'city', 'phone', 'description']
+        fields = ['id', 'address', 'city', 'phone', 'description']
 
 
 class VisitorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Visitor
-        fields = ['first_name', 'last_name', 'email', 'date_joined']
+        fields = ['id', 'first_name', 'last_name', 'email', 'date_joined']
 
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ['name', 'description']
+        fields = ['id', 'name', 'description']
 
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['name', 'price', 'description']
+        fields = ['id', 'name', 'price', 'description']
 
 
 class IngredientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ingredient
-        fields = ['name', 'unit', 'price_per_unit']
+        fields = ['id', 'name', 'unit', 'price_per_unit']
 
 
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
-        fields = ['name', 'unit', 'price_per_unit']
+        fields = ['id', 'date_time', 'status', 'coffee_shop']
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
