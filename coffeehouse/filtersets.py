@@ -1,4 +1,4 @@
-from django_filters import FilterSet, CharFilter, NumberFilter
+from django_filters import *
 
 from coffeehouse.models import *
 
@@ -16,106 +16,106 @@ class CoffeeShopFilterSet(FilterSet):
 
 
 class VisitorFilterSet(FilterSet):
-    id = models.IntegerField(primary_key=True)
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=100)
-    email = models.EmailField(max_length=50)
-    password = models.CharField(max_length=100)
-    date_joined = models.DateField()
+    id = NumberFilter(field_name="id", lookup_expr="exact")
+    first_name = CharFilter(field_name="first_name", lookup_expr="icontains")
+    last_name = CharFilter(field_name="last_name", lookup_expr="icontains")
+    email = CharFilter(field_name="email", lookup_expr="icontains")
+    password = CharFilter(field_name="password", lookup_expr="icontains")
+    date_joined = DateFilter(field_name="date_joined", lookup_expr="exact")
 
     class Meta:
         model = Visitor
-        fields = []
+        fields = ["id", "first_name", "last_name", "email", "password", "date_joined"]
 
 
 class CategoryFilterSet(FilterSet):
-    id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=100)
-    description = models.TextField()
+    id = NumberFilter(field_name="id", lookup_expr="exact")
+    name = CharFilter(field_name="name", lookup_expr="icontains")
+    description = CharFilter(field_name="description", lookup_expr="icontains")
 
     class Meta:
         model = Category
-        fields = []
+        fields = ["id", "name", "description"]
     
 
 class ProductFilterSet(FilterSet):
-    id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=150, null=False)
-    price = models.FloatField(default=0.00, null=False)
-    category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
-    description = models.TextField()
+    id = NumberFilter(field_name="id", lookup_expr="exact")
+    name = CharFilter(field_name="name", lookup_expr="icontains")
+    price = CharFilter(field_name="price", lookup_expr="icontains")
+    category = CharFilter(field_name="category", lookup_expr="icontains")
+    description = CharFilter(field_name="description", lookup_expr="icontains")
 
     class Meta:
         model = Product
-        fields = []
+        fields = ["id", "name", "price", "category", "description"]
 
 
 class IngredientFilterSet(FilterSet):
-    id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=100)
-    unit = models.CharField(max_length=50)
-    price_per_unit = models.FloatField(default=0.00)
+    id = NumberFilter(field_name="id", lookup_expr="exact")
+    name = CharFilter(field_name="name", lookup_expr="icontains")
+    unit = CharFilter(field_name="unit", lookup_expr="exact")
+    price_per_unit = NumberFilter(field_name="price_per_unit", lookup_expr="exact")
 
     class Meta:
         model = Ingredient
-        fields = []
+        fields = ["id", "name", "unit", "price_per_unit"]
 
 
 class OrderFilterSet(FilterSet):
-    id = models.IntegerField(primary_key=True)
-    date_time = models.DateTimeField()
-    coffee_shop = models.ForeignKey(CoffeeShop, on_delete=models.DO_NOTHING)
-    status = models.CharField(max_length=15)
+    id = NumberFilter(field_name="id", lookup_expr="exact")
+    date_time = DateFilter(field_name="date_time", lookup_expr="exact")
+    coffee_shop = CharFilter(field_name="address", lookup_expr="icontains")
+    status = CharFilter(field_name="status", lookup_expr="icontains")
 
     class Meta:
         model = Order
-        fields = []
+        fields = ["id", "date_time", "coffee_shop", "status"]
 
 
 class OrderItemFilterSet(FilterSet):
-    id = models.IntegerField(primary_key=True)
-    order = models.ForeignKey(Order, on_delete=models.DO_NOTHING)
-    item = models.ForeignKey(Product, on_delete=models.DO_NOTHING)
-    quantity = models.IntegerField()
-    unit_price = models.ManyToManyField(to=Product, related_name="products")
+    id = NumberFilter(field_name="id", lookup_expr="exact")
+    order = NumberFilter(ield_name="id", lookup_expr="exact")
+    item = NumberFilter(ield_name="id", lookup_expr="exact")
+    quantity = NumberFilter(ield_name="id", lookup_expr="exact")
+    unit_price = NumberFilter(ield_name="id", lookup_expr="exact")
 
     class Meta:
         model = OrderItem
-        fields = []
+        fields = ["id", "order", "item", "quantity", "unit_price"]
 
 
 class FreeTableFilterSet(FilterSet):
-    id = models.IntegerField(primary_key=True)
-    seats = models.IntegerField()
-    is_available = models.BooleanField()
+    id = NumberFilter(field_name="id", lookup_expr="exact")
+    seats = NumberFilter(field_name="seats", lookup_expr="exact")
+    is_available = BooleanFilter(field_name="is_available", lookup_expr="exact")
 
     class Meta:
         model = FreeTable
-        fields = []
+        fields = ["id", "seats", "is_available"]
 
 
 class PromotionFilterSet(FilterSet):
-    id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=100)
-    description = models.TextField()
-    start_date = models.DateField()
-    end_date = models.DateField()
-    discount = models.IntegerField()
-    product_type = models.ForeignKey(Product, on_delete=models.DO_NOTHING)
+    id = NumberFilter(field_name="id", lookup_expr="exact")
+    name = CharFilter(field_name="name", lookup_expr="icontains")
+    description = CharFilter(field_name="description", lookup_expr="icontains")
+    start_date = DateFilter(field_name="start_date", lookup_expr="exact")
+    end_date = DateFilter(field_name="end_date", lookup_expr="exact")
+    discount = NumberFilter(field_name="discount", lookup_expr="exact")
+    product_type = NumberFilter(field_name="product_type", lookup_expr="exact")
 
     class Meta:
         model = Promotion
-        fields = []
+        fields = ["id", "name", "description", "start_date", "end_date", "discount", "product_type"]
 
 
 class ReviewFilterSet(FilterSet):
-    id = models.IntegerField(primary_key=True)
-    product = models.ForeignKey(Product, on_delete=models.DO_NOTHING)
-    visitor = models.ForeignKey(Visitor, on_delete=models.DO_NOTHING)
-    rating = models.IntegerField()
-    context = models.TextField()
+    id = NumberFilter(field_name="id", lookup_expr="exact")
+    product = NumberFilter(field_name="product", lookup_expr="exact")
+    visitor = NumberFilter(field_name="visitor", lookup_expr="exact")
+    rating = NumberFilter(field_name="rating", lookup_expr="exact")
+    context = CharFilter(field_name="context", lookup_expr="icontains")
 
     class Meta:
         model = Review
-        fields = []
+        fields = ["id", "product", "visitor", "rating", "context"]
         

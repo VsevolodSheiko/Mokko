@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'django_filters',
     'coffeehouse',
     'drf_yasg',
@@ -83,7 +84,8 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
-        #'rest_framework.authentication.TokenAuthentication'
+        #'rest_framework.authentication.TokenAuthentication',
+        #'coffeehouse.authentication.IPAddressAuthentication',
     ],
 }
 
