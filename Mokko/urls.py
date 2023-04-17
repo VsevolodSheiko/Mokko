@@ -16,12 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from rest_framework.documentation import include_docs_urls
 from rest_framework.authtoken import views
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
 from coffeehouse.viewsets import *
+from coffeehouse.views_authentication import login_view, registration_view, logout_view
+
 
 router = routers.DefaultRouter()
 
@@ -56,6 +57,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('api/token/', views.obtain_auth_token),
+    path('api/login/', login_view),
+    path('api/register/', registration_view),
+    path('api/logout/', logout_view),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]

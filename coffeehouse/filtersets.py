@@ -1,6 +1,6 @@
 from django_filters import *
 
-from coffeehouse.models import *
+from coffeehouse.models import coffeeshop, category, freetable, ingredient, order, orderitem, product, promotion, review, visitor
 
 class CoffeeShopFilterSet(FilterSet):
     id = NumberFilter(field_name="id", lookup_expr="exact")
@@ -10,7 +10,7 @@ class CoffeeShopFilterSet(FilterSet):
     description = CharFilter(field_name="description", lookup_expr="icontains")
     
     class Meta:
-        model = CoffeeShop
+        model = coffeeshop.CoffeeShop
         fields = ["id", "address", "phone", "city", "description"]
 
 
@@ -24,7 +24,7 @@ class VisitorFilterSet(FilterSet):
     date_joined = DateFilter(field_name="date_joined", lookup_expr="exact")
 
     class Meta:
-        model = Visitor
+        model = visitor.Visitor
         fields = ["id", "first_name", "last_name", "email", "password", "date_joined"]
 
 
@@ -34,7 +34,7 @@ class CategoryFilterSet(FilterSet):
     description = CharFilter(field_name="description", lookup_expr="icontains")
 
     class Meta:
-        model = Category
+        model = category.Category
         fields = ["id", "name", "description"]
     
 
@@ -46,7 +46,7 @@ class ProductFilterSet(FilterSet):
     description = CharFilter(field_name="description", lookup_expr="icontains")
 
     class Meta:
-        model = Product
+        model = product.Product
         fields = ["id", "name", "price", "category", "description"]
 
 
@@ -57,7 +57,7 @@ class IngredientFilterSet(FilterSet):
     price_per_unit = NumberFilter(field_name="price_per_unit", lookup_expr="exact")
 
     class Meta:
-        model = Ingredient
+        model = ingredient.Ingredient
         fields = ["id", "name", "unit", "price_per_unit"]
 
 
@@ -68,7 +68,7 @@ class OrderFilterSet(FilterSet):
     status = CharFilter(field_name="status", lookup_expr="icontains")
 
     class Meta:
-        model = Order
+        model = order.Order
         fields = ["id", "date_time", "coffee_shop", "status"]
 
 
@@ -80,7 +80,7 @@ class OrderItemFilterSet(FilterSet):
     unit_price = NumberFilter(ield_name="id", lookup_expr="exact")
 
     class Meta:
-        model = OrderItem
+        model = orderitem.OrderItem
         fields = ["id", "order", "item", "quantity", "unit_price"]
 
 
@@ -90,7 +90,7 @@ class FreeTableFilterSet(FilterSet):
     is_available = BooleanFilter(field_name="is_available", lookup_expr="exact")
 
     class Meta:
-        model = FreeTable
+        model = freetable.FreeTable
         fields = ["id", "seats", "is_available"]
 
 
@@ -104,7 +104,7 @@ class PromotionFilterSet(FilterSet):
     product_type = NumberFilter(field_name="product_type", lookup_expr="exact")
 
     class Meta:
-        model = Promotion
+        model = promotion.Promotion
         fields = ["id", "name", "description", "start_date", "end_date", "discount", "product_type"]
 
 
@@ -116,6 +116,6 @@ class ReviewFilterSet(FilterSet):
     context = CharFilter(field_name="context", lookup_expr="icontains")
 
     class Meta:
-        model = Review
+        model = review.Review
         fields = ["id", "product", "visitor", "rating", "context"]
         
