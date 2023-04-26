@@ -12,4 +12,3 @@ class CoffeeShop(models.Model):
         verbose_name = "coffeeshop"
         verbose_name_plural = "coffeeshops"
 
-

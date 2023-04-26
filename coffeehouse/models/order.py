@@ -1,6 +1,7 @@
 from django.db import models
 from .coffeeshop import CoffeeShop
 
+
 class Order(models.Model):
     id = models.IntegerField(primary_key=True)
     date_time = models.DateTimeField()
@@ -11,3 +12,4 @@ class Order(models.Model):
         db_table = "order"
         verbose_name = "order"
         verbose_name_plural = "orders"
+    

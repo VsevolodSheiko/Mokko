@@ -1,6 +1,6 @@
 from faker import Faker
 from django.core.management import BaseCommand
-from coffeehouse.models import Visitor
+from coffeehouse.models.visitor import Visitor
 
 fake = Faker('uk')
 

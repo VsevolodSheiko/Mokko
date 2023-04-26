@@ -8,9 +8,9 @@ from django.core.management import BaseCommand
 
 
 #  Make POST api/login/ 
-"""class Command(BaseCommand):
+class Command(BaseCommand):
     def handle(self, *args, **options):
-        print(requests.post('http://localhost:8000/api/login/', data={"username":"root", "password":"Volia2003"}))"""
+        print(requests.post('http://localhost:8000/api/login/', json={"username":"root", "password":"Volia2003"}).text)
 
 
 #  Make POST api/register/ 

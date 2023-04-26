@@ -1,12 +1,12 @@
 from faker import Faker
 from django.core.management import BaseCommand
-from coffeehouse.models import CoffeeShop
+from coffeehouse.models.coffeeshop import CoffeeShop
 
 fake = Faker('uk')
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        for i in range(50):
+        for i in range(1, 51):
             address = fake.street_address()
 
             # Generate a fake city

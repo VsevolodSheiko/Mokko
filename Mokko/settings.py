@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'celery',
+    #'kombu.transport.django',
     'django_filters',
     'coffeehouse',
     'drf_yasg',
@@ -90,13 +91,13 @@ REST_FRAMEWORK = {
     ],
 }
 
-CELERY_BROKER_URL = 'amqp://localhost:7777'
-CELERY_RESULT_BACKEND = 'rpc://'
+CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672'
+CELERY_RESULT_BACKEND = f'db+mysql://{os.getenv("DATABASE_USER")}:{os.getenv("DATABASE_PASSWORD")}@localhost/{os.getenv("DATABASE_NAME")}'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 
-CELERY_TIMEZONE = 'UTC'
+CELERY_TIMEZONE = 'Europe/Kyiv'
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
 
