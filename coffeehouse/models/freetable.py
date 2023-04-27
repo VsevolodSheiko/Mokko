@@ -7,7 +7,7 @@ class FreeTable(models.Model):
     id = models.IntegerField(primary_key=True)
     seats = models.IntegerField()
     is_available = models.BooleanField()
-    coffeeshop = models.ForeignKey(CoffeeShop, on_delete=models.DO_NOTHING)
+    coffeeshop = models.ForeignKey(CoffeeShop, on_delete=models.DO_NOTHING, related_name='tables')
 
     class Meta:
         db_table = "freetable"

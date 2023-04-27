@@ -7,7 +7,7 @@ class Order(models.Model):
     id = models.IntegerField(primary_key=True)
     date_time = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=15)
-    table = models.ForeignKey(FreeTable, on_delete=models.DO_NOTHING)
+    table = models.ForeignKey(FreeTable, on_delete=models.DO_NOTHING, related_name='orders')
 
 
     class Meta:
