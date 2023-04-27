@@ -19,6 +19,7 @@ from rest_framework import routers
 from rest_framework.authtoken import views
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from graphene_django.views import GraphQLView
 
 from coffeehouse.viewsets import *
 from coffeehouse.views_authentication import login_view, registration_view, logout_view
@@ -62,4 +63,5 @@ urlpatterns = [
     path('api/logout/', logout_view),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    path('graphql/', GraphQLView.as_view(graphiql=True)),
 ]

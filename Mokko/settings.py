@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+from celery.schedules import crontab
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -43,10 +44,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'celery',
-    #'kombu.transport.django',
+    'graphene_django',
+    'django_celery_beat',
+    'django_celery_results',
     'django_filters',
-    'coffeehouse',
     'drf_yasg',
+    'coffeehouse',
 
 ]
 
@@ -92,14 +95,22 @@ REST_FRAMEWORK = {
 }
 
 CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672'
-CELERY_RESULT_BACKEND = f'db+mysql://{os.getenv("DATABASE_USER")}:{os.getenv("DATABASE_PASSWORD")}@localhost/{os.getenv("DATABASE_NAME")}'
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
+#CELERY_RESULT_BACKEND = f'db+mysql://{os.getenv("DATABASE_USER")}:{os.getenv("DATABASE_PASSWORD")}@localhost/{os.getenv("DATABASE_NAME")}'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_TASK_TRACK_STARTED=True
 
-CELERY_TIMEZONE = 'Europe/Kyiv'
-CELERY_TASK_TRACK_STARTED = True
-CELERY_TASK_TIME_LIMIT = 30 * 60
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+
+CELERY_BEAT_SCHEDULE = {
+    "clear_all_unactive_orders_every_day_at_06": {
+        "task": "coffeehouse.tasks.clear_unactive_orders",
+        "schedule": crontab(hour="6", minute="0"),
+    },
+}
+
+GRAPHENE = {
+    "SCHEMA": "Mokko.schema.schema"
+}
 
 WSGI_APPLICATION = 'Mokko.wsgi.application'
 

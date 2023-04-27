@@ -1,10 +1,13 @@
 from django.db import models
 
+from .coffeeshop import CoffeeShop
+
 
 class FreeTable(models.Model):
     id = models.IntegerField(primary_key=True)
     seats = models.IntegerField()
     is_available = models.BooleanField()
+    coffeeshop = models.ForeignKey(CoffeeShop, on_delete=models.DO_NOTHING)
 
     class Meta:
         db_table = "freetable"

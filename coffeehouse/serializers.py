@@ -6,68 +6,69 @@ from coffeehouse.models import coffeeshop, category, freetable, ingredient, orde
 class CoffeeShopSerializer(serializers.ModelSerializer):
     class Meta:
         model = coffeeshop.CoffeeShop
-        fields = ['id', 'address', 'city', 'phone', 'description']
+        fields = '__all__'
 
 
 class VisitorSerializer(serializers.ModelSerializer):
     class Meta:
         model = visitor.Visitor
-        fields = ['id', 'first_name', 'last_name', 'email', 'password', 'date_joined']
+        fields = '__all__'
 
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = category.Category
-        fields = ['id', 'name', 'description']
+        fields = '__all__'
 
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = product.Product
-        fields = ['id', 'name', 'price', 'category', 'description']
+        fields = '__all__'
 
 
 class IngredientSerializer(serializers.ModelSerializer):
     class Meta:
         model = ingredient.Ingredient
-        fields = ['id', 'name', 'unit', 'price_per_unit']
+        fields = '__all__'
 
 
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = order.Order
-        fields = ['id', 'date_time', 'coffee_shop', 'status']
+        #fields = ['id', 'date_time', 'coffee_shop', 'status']
+        fields = '__all__'
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = orderitem.OrderItem
-        fields = ['id', 'order', 'item', 'quantity', 'unit_price']
+        fields = '__all__'
 
 
 class FreeTableSerializer(serializers.ModelSerializer):
     class Meta:
         model = freetable.FreeTable
-        fields = ['id', 'seats', 'is_available']
+        fields = '__all__'
 
 
 class PromotionSerializer(serializers.ModelSerializer):
     class Meta:
         model = promotion.Promotion
-        fields = ['id', 'name', 'description', 'start_date', 'end_date', 'discount', 'product_type']
+        fields = '__all__'
 
 
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = review.Review
-        fields = ['id', 'product', 'visitor', 'rating', 'context']
+        fields = '__all__'
 
 
 #  Custom Serializers
 class RegistrationSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'password']
+        fields = '__all__'
     
     def create(self, validated_data):
         customer = User.objects.create_user(**validated_data)

@@ -64,7 +64,7 @@ class IngredientFilterSet(FilterSet):
 class OrderFilterSet(FilterSet):
     id = NumberFilter(field_name="id", lookup_expr="exact")
     date_time = DateFilter(field_name="date_time", lookup_expr="exact")
-    coffee_shop = CharFilter(field_name="address", lookup_expr="icontains")
+    coffee_shop = CharFilter(field_name="address", lookup_expr="exact")
     status = CharFilter(field_name="status", lookup_expr="icontains")
 
     class Meta:
@@ -74,10 +74,10 @@ class OrderFilterSet(FilterSet):
 
 class OrderItemFilterSet(FilterSet):
     id = NumberFilter(field_name="id", lookup_expr="exact")
-    order = NumberFilter(ield_name="id", lookup_expr="exact")
-    item = NumberFilter(ield_name="id", lookup_expr="exact")
-    quantity = NumberFilter(ield_name="id", lookup_expr="exact")
-    unit_price = NumberFilter(ield_name="id", lookup_expr="exact")
+    order = NumberFilter(field_name="id", lookup_expr="exact")
+    item = NumberFilter(field_name="id", lookup_expr="exact")
+    quantity = NumberFilter(field_name="id", lookup_expr="exact")
+    unit_price = NumberFilter(field_name="id", lookup_expr="exact")
 
     class Meta:
         model = orderitem.OrderItem
