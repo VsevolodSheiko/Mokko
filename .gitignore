@@ -1,4 +1,6 @@
-.env
+.idea
+.venv
 __pycache__
 /Mokko/__pycache__
 /coffeehouse/__pycache__
+service_account.json

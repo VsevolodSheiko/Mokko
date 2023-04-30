@@ -7,5 +7,5 @@ fake = Faker('uk')
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        for i in range(1, 201):
-            FreeTable.objects.create(id=i, seats=random.randint(2, 15), is_available=random.randint(0, 1), coffeeshop=(CoffeeShop.objects.get(id=random.randint(1, 50))))
+        for i in range(1, 100):
+            FreeTable.objects.create(id=i, seats=random.randint(2, 15), is_available=random.randint(0, 1), coffeeshop=(CoffeeShop.objects.get(id=random.randint(1,10))))

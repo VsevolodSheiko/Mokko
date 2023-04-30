@@ -50,7 +50,6 @@ INSTALLED_APPS = [
     'django_filters',
     'drf_yasg',
     'coffeehouse',
-
 ]
 
 MIDDLEWARE = [
@@ -97,15 +96,20 @@ REST_FRAMEWORK = {
 CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672'
 #CELERY_RESULT_BACKEND = f'db+mysql://{os.getenv("DATABASE_USER")}:{os.getenv("DATABASE_PASSWORD")}@localhost/{os.getenv("DATABASE_NAME")}'
 CELERY_RESULT_BACKEND = 'django-db'
-CELERY_TASK_TRACK_STARTED=True
+CELERY_TASK_TRACK_STARTED = True
 
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 CELERY_BEAT_SCHEDULE = {
     "clear_all_unactive_orders_every_day_at_06": {
         "task": "coffeehouse.tasks.clear_unactive_orders",
-        "schedule": crontab(hour="6", minute="0"),
+        #"schedule": crontab(hour="6", minute="0"),
+        "schedule": crontab("*", "*", "*", "*", "*"),
     },
+    "visitors_joined_today": {
+        "task": "coffeehouse.tasks.add_new_visitors_to_google_sheets",
+        "schedule": crontab("*", "*", "*", "*", "*"),
+    }
 }
 
 GRAPHENE = {

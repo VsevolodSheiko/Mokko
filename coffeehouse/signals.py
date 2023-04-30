@@ -5,6 +5,7 @@ from .tasks import on_order_creation
 
 @receiver(post_save, sender=Order)
 def celery_on_order_creation(sender, instance, created, **kwargs):
+    print("signal triggered")
     if created:
         on_order_creation.delay()
 

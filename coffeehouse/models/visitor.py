@@ -6,6 +6,7 @@ class Visitor(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=100)
     email = models.EmailField(max_length=50)
+    date_joined = models.DateField(null=True)
 
     class Meta:
         db_table = "visitor"

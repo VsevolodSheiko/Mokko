@@ -9,4 +9,5 @@ fake = Faker('uk')
 class Command(BaseCommand):
     def handle(self, *args, **options):
         for i in range(1, 13096):
-            FreeTable.objects.create(id=i, date_time=datetime.now(), coffeeshop=(CoffeeShop.objects.get(id=random.randint(1, 50))))
+            freetable = FreeTable.objects.get(id=random.randint(1, 100))
+            Order.objects.create(id=i, date_time=datetime.now(), status=random.choice(["In progress", "Ready"]), table_id=(freetable.id))
