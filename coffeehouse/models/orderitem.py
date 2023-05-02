@@ -14,3 +14,6 @@ class OrderItem(models.Model):
         db_table = "orderitem"
         verbose_name = "orderitem"
         verbose_name_plural = "orderitems"
+    
+    def __str__(self):
+        return self.id

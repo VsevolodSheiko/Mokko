@@ -1,11 +1,8 @@
-import os.path
 
-from google.auth.transport.requests import Request
+
+
 from google.oauth2 import service_account
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
 from coffeehouse.models.visitor import Visitor
 from datetime import date
 
@@ -35,9 +32,9 @@ def write():
     visitors.delete()
     service = get_service()
     sheet = service.spreadsheets()
-    result = sheet.values().update(
+    sheet.values().update(
         spreadsheetId=SAMPLE_SPREADSHEET_ID,
         range=SAMPLE_RANGE_NAME,
         valueInputOption="USER_ENTERED",
-        body={"values": [["1"], ["2"]]}
+        body={"values": values}
     ).execute()

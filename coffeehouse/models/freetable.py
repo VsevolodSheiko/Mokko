@@ -13,3 +13,6 @@ class FreeTable(models.Model):
         db_table = "freetable"
         verbose_name = "freetable"
         verbose_name_plural = "freetables"
+    
+    def __str__(self):
+        return self.id

@@ -12,3 +12,6 @@ class Visitor(models.Model):
         db_table = "visitor"
         verbose_name = "visitor"
         verbose_name_plural = "visitors"
+    
+    def __str__(self):
+        return f"{self.id} {self.first_name} {self.last_name}"

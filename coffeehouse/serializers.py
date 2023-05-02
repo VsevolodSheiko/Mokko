@@ -36,8 +36,7 @@ class IngredientSerializer(serializers.ModelSerializer):
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = order.Order
-        #fields = ['id', 'date_time', 'coffee_shop', 'status']
-        fields = '__all__'
+        fields = ['id', 'date_time', 'table', 'status']
 
 
 class OrderItemSerializer(serializers.ModelSerializer):

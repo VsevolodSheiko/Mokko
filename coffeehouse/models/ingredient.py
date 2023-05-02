@@ -11,3 +11,6 @@ class Ingredient(models.Model):
         db_table = "ingredient"
         verbose_name = "ingredient"
         verbose_name_plural = "ingredients"
+    
+    def __str__(self) -> str:
+        return self.name

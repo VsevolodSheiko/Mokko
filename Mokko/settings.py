@@ -25,6 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -99,16 +100,16 @@ CELERY_RESULT_BACKEND = 'django-db'
 CELERY_TASK_TRACK_STARTED = True
 
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
-
+from datetime import timedelta
 CELERY_BEAT_SCHEDULE = {
     "clear_all_unactive_orders_every_day_at_06": {
         "task": "coffeehouse.tasks.clear_unactive_orders",
         #"schedule": crontab(hour="6", minute="0"),
         "schedule": crontab("*", "*", "*", "*", "*"),
     },
-    "visitors_joined_today": {
+    "visitors_joined_today": { 
         "task": "coffeehouse.tasks.add_new_visitors_to_google_sheets",
-        "schedule": crontab("*", "*", "*", "*", "*"),
+        "schedule": timedelta(minutes=1),
     }
 }
 

@@ -14,3 +14,6 @@ class Review(models.Model):
         db_table = "review"
         verbose_name = 'review'
         verbose_name_plural = 'reviews'
+    
+    def __str__(self):
+        return f"{self.id} {self.product}"

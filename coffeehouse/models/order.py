@@ -15,11 +15,14 @@ class Order(models.Model):
     date_time = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=15)
     table = models.ForeignKey(FreeTable, on_delete=models.DO_NOTHING, related_name='orders')
-
+    
     class Meta:
         db_table = "order"
         verbose_name = "order"
         verbose_name_plural = "orders"
+    
+    def __str__(self):
+        return self.id
 
 
 @receiver(post_save, sender=Order)
@@ -41,7 +44,7 @@ def on_order_creation(order_id):
         "chat_id": TELEGRAM_MY_ID,
         "text": text,
     }
-    response = requests.post(url, json=body)
+    requests.post(url, json=body)
 
 
 

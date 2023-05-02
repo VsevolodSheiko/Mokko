@@ -1,6 +1,5 @@
 from django.contrib.auth import login, logout, authenticate
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
-from django.shortcuts import redirect
 from rest_framework.response import Response
 from rest_framework.permissions import *
 from coffeehouse.serializers import RegistrationSerializer

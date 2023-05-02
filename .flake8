@@ -1,0 +1,29 @@
+[flake8]
+
+# Maximum line length
+max-line-length = 200
+
+# Ignore certain error codes
+ignore = E203, E266, E501, W503, F403, F405
+
+# Excludes directories and files from linting
+exclude = 
+    .git,
+    __pycache__,
+    tests/,
+    docs/
+
+# Select which error codes to report
+select = 
+    F401, 
+    F403, 
+    F405, 
+    F811, 
+    F821, 
+    F841, 
+    E501
+
+# Enable certain plugins
+plugins =
+    flake8-bandit,
+    flake8-docstrings

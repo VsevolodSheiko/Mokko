@@ -15,3 +15,6 @@ class Promotion(models.Model):
         db_table = "promotion"
         verbose_name = "promotion"
         verbose_name_plural = "promotions"
+    
+    def __str__(self):
+        return self.id

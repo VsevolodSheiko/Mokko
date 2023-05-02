@@ -11,4 +11,4 @@ def add_new_visitors_to_google_sheets():
 
 @shared_task()
 def clear_unactive_orders():
-    values = Order.objects.filter(status="Ready").delete()
+    Order.objects.filter(status="Ready").delete()
