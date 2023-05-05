@@ -23,8 +23,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
-
+#SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
+SECRET_KEY = "django-insecure-tmy&n53v(-inxz2l8=7&rjx)*#uscc(+qn4(0+*ek(o6&z#nuc"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -117,7 +117,7 @@ CELERY_BEAT_SCHEDULE = {
     },
     "visitors_joined_today": { 
         "task": "coffeehouse.tasks.add_new_visitors_to_google_sheets",
-        "schedule": timedelta(seconds=5),
+        "schedule": timedelta(minutes=1),
     }
 }
 
@@ -126,7 +126,6 @@ GRAPHENE = {
 }
 
 WSGI_APPLICATION = 'Mokko.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -167,7 +166,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Kiev'
 
 USE_I18N = True
 
