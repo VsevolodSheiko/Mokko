@@ -42,7 +42,7 @@ class OrderSerializer(serializers.ModelSerializer):
 class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = orderitem.OrderItem
-        fields = '__all__'
+        fields = ['id', 'order', 'item', 'quantity']
 
 
 class FreeTableSerializer(serializers.ModelSerializer):

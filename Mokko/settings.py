@@ -92,6 +92,14 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
         #'Mokko.authentication.IPAddressAuthentication',
     ],
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle'
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '10/day',
+        'user': '20/min'
+    }
 }
 
 CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672'
@@ -105,11 +113,11 @@ CELERY_BEAT_SCHEDULE = {
     "clear_all_unactive_orders_every_day_at_06": {
         "task": "coffeehouse.tasks.clear_unactive_orders",
         #"schedule": crontab(hour="6", minute="0"),
-        "schedule": crontab("*", "*", "*", "*", "*"),
+        "schedule": timedelta(minutes=1),
     },
     "visitors_joined_today": { 
         "task": "coffeehouse.tasks.add_new_visitors_to_google_sheets",
-        "schedule": timedelta(minutes=1),
+        "schedule": timedelta(seconds=5),
     }
 }
 

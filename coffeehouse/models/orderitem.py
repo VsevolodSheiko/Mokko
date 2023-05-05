@@ -16,4 +16,4 @@ class OrderItem(models.Model):
         verbose_name_plural = "orderitems"
     
     def __str__(self):
-        return self.id
+        return f"{self.id}"

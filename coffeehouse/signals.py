@@ -1,4 +1,4 @@
-from django.db.models.signals import post_save
+"""from django.db.models.signals import post_save
 from django.dispatch import receiver
 from coffeehouse.models.order import Order
 from .tasks import on_order_creation
@@ -7,7 +7,7 @@ from .tasks import on_order_creation
 def celery_on_order_creation(sender, instance, created, **kwargs):
     print("signal triggered")
     if created:
-        on_order_creation.delay()
+        on_order_creation.delay()"""
 
 
 

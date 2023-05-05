@@ -22,7 +22,7 @@ class Order(models.Model):
         verbose_name_plural = "orders"
     
     def __str__(self):
-        return self.id
+        return f"{self.id}"
 
 
 @receiver(post_save, sender=Order)

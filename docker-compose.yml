@@ -1,0 +1,76 @@
+services:
+  web:
+    container_name: web
+    build:
+      context: .
+    image: mokko
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    env_file: .env
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+      - DATABASE_NAME = "Mokko"
+      - DATABASE_PASSWORD = "Volia2003"
+      - DATABASE_USER = "root"
+      - MYSQL_ROOT_PASSWORD = "Volia2003"
+    restart: always
+  
+  database:
+    image: mysql:latest
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: '0.50'
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "Volia2003"
+      DATABASE_PASSWORD: "Volia2003"
+      DATABASE_USER: "root"
+      DATABASE_NAME: "Mokko"
+      
+  
+  migrate:
+    image: mokko
+    depends_on:
+      - database
+    volumes:
+      - .:/app
+    env_file: .env
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+      - DATABASE_NAME = "Mokko"
+      - DATABASE_PASSWORD = "Volia2003"
+      - DATABASE_USER = "root"
+      - MYSQL_ROOT_PASSWORD = "Volia2003"
+    command: python manage.py migrate
+    restart: on-failure
+  
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "56722:5672"
+      - "15672:15672"
+  
+  celery:
+    depends_on:
+      - database
+      - rabbitmq
+    image: mokko
+    volumes:
+      - .:/app
+    env_file: .env
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+      - DATABASE_NAME = "Mokko"
+      - DATABASE_PASSWORD = "Volia2003"
+      - DATABASE_USER = "root"
+      - MYSQL_ROOT_PASSWORD = "Volia2003"
+    command: celery -A Mokko worker -l info --beat
+    restart: always
+
+  
+  

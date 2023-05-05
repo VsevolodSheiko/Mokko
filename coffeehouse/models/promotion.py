@@ -17,4 +17,4 @@ class Promotion(models.Model):
         verbose_name_plural = "promotions"
     
     def __str__(self):
-        return self.id
+        return f"{self.id}"

@@ -1,3 +1,4 @@
+from rest_framework import throttling
 from rest_framework.viewsets import ModelViewSet
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.pagination import LimitOffsetPagination, PageNumberPagination
@@ -18,12 +19,16 @@ from coffeehouse.models.review import Review
 from coffeehouse.serializers import *
 from coffeehouse.filtersets import *
 
+
+
 class CoffeeShopViewSet(ModelViewSet):
     queryset = CoffeeShop.objects.all()
     serializer_class = CoffeeShopSerializer
     pagination_class = LimitOffsetPagination
     filter_backends = [DjangoFilterBackend]
     filterset_class = CoffeeShopFilterSet
+    throttle_classes = [throttling.AnonRateThrottle, throttling.UserRateThrottle]
+
 
 
 class VisitorViewSet(ModelViewSet):
@@ -32,6 +37,7 @@ class VisitorViewSet(ModelViewSet):
     pagination_class = CustomPagination
     filter_backends = [DjangoFilterBackend]
     filterset_class = VisitorFilterSet
+    throttle_classes = [throttling.AnonRateThrottle, throttling.UserRateThrottle]
 
 
 class CategoryViewSet(ModelViewSet):
@@ -39,6 +45,7 @@ class CategoryViewSet(ModelViewSet):
     serializer_class = CategorySerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = CategoryFilterSet
+    throttle_classes = [throttling.AnonRateThrottle, throttling.UserRateThrottle]
 
 
 class ProductViewSet(ModelViewSet):
@@ -47,6 +54,7 @@ class ProductViewSet(ModelViewSet):
     pagination_class = LimitOffsetPagination
     filter_backends = [DjangoFilterBackend]
     filterset_class = ProductFilterSet
+    throttle_classes = [throttling.AnonRateThrottle, throttling.UserRateThrottle]
 
 
 class IngredientViewSet(ModelViewSet):
@@ -54,6 +62,7 @@ class IngredientViewSet(ModelViewSet):
     serializer_class = IngredientSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = IngredientFilterSet
+    throttle_classes = [throttling.AnonRateThrottle, throttling.UserRateThrottle]
 
 
 class OrderViewSet(ModelViewSet):
@@ -62,6 +71,7 @@ class OrderViewSet(ModelViewSet):
     pagination_class = CustomPagination
     filter_backends = [DjangoFilterBackend]
     filterset_class = OrderFilterSet
+    throttle_classes = [throttling.AnonRateThrottle, throttling.UserRateThrottle]
     
 
 
@@ -70,6 +80,7 @@ class OrderItemViewSet(ModelViewSet):
     serializer_class = OrderItemSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = OrderItemFilterSet
+    throttle_classes = [throttling.AnonRateThrottle, throttling.UserRateThrottle]
 
 
 class FreeTableViewSet(ModelViewSet):
@@ -77,6 +88,7 @@ class FreeTableViewSet(ModelViewSet):
     serializer_class = FreeTableSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = FreeTableFilterSet
+    throttle_classes = [throttling.AnonRateThrottle, throttling.UserRateThrottle]
 
 
 class PromotionViewSet(ModelViewSet):
@@ -84,6 +96,7 @@ class PromotionViewSet(ModelViewSet):
     serializer_class = PromotionSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = ProductFilterSet
+    throttle_classes = [throttling.AnonRateThrottle, throttling.UserRateThrottle]
 
 
 class ReviewViewSet(ModelViewSet):
@@ -92,3 +105,4 @@ class ReviewViewSet(ModelViewSet):
     pagination_class = CustomPagination
     filter_backends = [DjangoFilterBackend]
     filterset_class = ReviewFilterSet
+    throttle_classes = [throttling.AnonRateThrottle, throttling.UserRateThrottle]

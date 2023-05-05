@@ -15,4 +15,4 @@ class FreeTable(models.Model):
         verbose_name_plural = "freetables"
     
     def __str__(self):
-        return self.id
+        return f"{self.id}"
