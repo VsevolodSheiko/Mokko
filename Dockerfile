@@ -20,5 +20,5 @@ WORKDIR /app
 EXPOSE 8000
 
 # Start Gunicorn with the appropriate settings
-CMD gunicorn Mokko.wsgi:application --config gunicorn.py
+CMD gunicorn -c gunicorn.py Mokko.wsgi 
 
