@@ -10,7 +10,7 @@ def add_new_visitors_to_google_sheets():
 
 
 @shared_task()
-def clear_unactive_orders():
+def get_logged_users():
     print("Started logins to site")
     logs = LogEntry.objects.all()
     for log in logs:

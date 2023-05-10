@@ -1,67 +1,72 @@
 services:
-  web:
-    container_name: web
+  server:
+    container_name: server
     build:
       context: .
-    image: mokko
+    image: mokko-server
     volumes:
       - .:/app
     ports:
-      - "8000:8000"
+      - 8000:8000
     env_file: .env
     environment:
       - RABBITMQ_HOST=rabbitmq
-      - DATABASE_NAME = "mokko"
-      - DATABASE_PASSWORD = "Volia2003"
-      - DATABASE_USER = "root"
-      - MYSQL_ROOT_PASSWORD = "Volia2003"
-    restart: always
+      - DB_HOST=db
+      - DB_USERNAME=root
+      - DB_PASSWORD=Volia2003
+      - DB_NAME=Mokko
+    command: gunicorn -c gunicorn.py Mokko.wsgi 
+  
+  db:
+    image: mysql
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_DATABASE: "Mokko"
+      MYSQL_ROOT_PASSWORD: "Volia2003"
   
   migrate:
-    image: mokko
+    build:
+      context: .
+    image: mokko-server
     depends_on:
-      - database
+      - db
     volumes:
       - .:/app
     env_file: .env
     environment:
       - RABBITMQ_HOST=rabbitmq
-      - DATABASE_NAME = "mokko"
-      - DATABASE_PASSWORD = "Volia2003"
-      - DATABASE_USER = "root"
-      - MYSQL_ROOT_PASSWORD = "Volia2003"
+      - DB_HOST=db
+      - DB_USERNAME=root
+      - DB_PASSWORD=Volia2003
+      - DB_NAME=Mokko
     command: python manage.py migrate
+    restart: on-failure
   
   rabbitmq:
-    image: rabbitmq:latest
+    image: rabbitmq:3-management
     ports:
-      - "56722:5672"
+      - "5673:5672"
       - "15672:15672"
   
   celery:
     depends_on:
-      - database
+      - db
       - rabbitmq
-    image: mokko
+    image: mokko-server
     volumes:
       - .:/app
     env_file: .env
     environment:
       - RABBITMQ_HOST=rabbitmq
-      - DATABASE_NAME = "mokko"
-      - DATABASE_PASSWORD = "Volia2003"
-      - DATABASE_USER = "root"
-      - MYSQL_ROOT_PASSWORD = "Volia2003"
+      - DB_HOST=db
+      - DB_USERNAME=root
+      - DB_PASSWORD=Volia2003
+      - DB_NAME=Mokko
     command: celery -A Mokko worker -l info --beat
+    restart: on-failure
 
-  database:
-    image: mysql:latest
-    ports:
-      - "33066:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: "Volia2003"
-      MYSQL_DATABASE: "mokko"
-      MYSQL_USER: "user"
-      MYSQL_PASSWORD: "Volia2003"
+  
+
   
   

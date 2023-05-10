@@ -13,6 +13,7 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 from celery.schedules import crontab
+from datetime import timedelta
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -32,6 +33,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 # Load the environment variables from the .env file
 load_dotenv()
+
 
 # Application definition
 
@@ -102,22 +104,21 @@ REST_FRAMEWORK = {
     }
 }
 
-CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672'
-#CELERY_RESULT_BACKEND = f'db+mysql://{os.getenv("DATABASE_USER")}:{os.getenv("DATABASE_PASSWORD")}@localhost/{os.getenv("DATABASE_NAME")}'
+
+CELERY_BROKER_URL = f'amqp://guest:guest@rabbitmq:5672'
+
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_TASK_TRACK_STARTED = True
 
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
-from datetime import timedelta
 CELERY_BEAT_SCHEDULE = {
-    "clear_all_unactive_orders_every_day_at_06": {
-        "task": "coffeehouse.tasks.clear_unactive_orders",
-        #"schedule": crontab(hour="6", minute="0"),
-        "schedule": timedelta(minutes=1),
+    "get_logged_users": {
+        "task": "coffeehouse.tasks.get_logged_users",
+        "schedule": timedelta(seconds=10),
     },
     "visitors_joined_today": { 
         "task": "coffeehouse.tasks.add_new_visitors_to_google_sheets",
-        "schedule": timedelta(minutes=1),
+        "schedule": timedelta(seconds=10),
     }
 }
 
@@ -136,10 +137,11 @@ DATABASES = {
         'NAME': os.getenv("DATABASE_NAME"),
         'USER': os.getenv("DATABASE_USER"),
         'PASSWORD': os.getenv("DATABASE_PASSWORD"),
-        'HOST': 'localhost',
+        'HOST': "db",
         'PORT': '3306',
     }
 }
+
 
 
 # Password validation
@@ -176,6 +178,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = 'static/'
 
 # Default primary key field type
